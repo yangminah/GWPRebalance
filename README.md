@@ -1,8 +1,11 @@
 # GWPRebalance
-
 ## MiMA
-- This directory contains `forpy_mod.F90`, which is needed to use the package forpy for coupling python codes into forpy framework. More information about this package is available at [https://github.com/ylikx/forpy](https://github.com/ylikx/forpy).
-- `cg_drag.f90` details how the MiMA codes were edited to replace the original AD99 implementation in Fortran with various versions of the ML emulators written in Python. These require using the aforementioned package, `forpy`.
+The MiMA subdir contains a few modifications needed to couple torch models to MiMA (see https://github.com/mjucker/MiMA).
+- cg_drag.f90 should be placed in `MiMA/src/atmos_param/cg_drag/`
+    - `cg_drag.f90` details how the MiMA codes were edited to replace the original AD99 implementation in Fortran with various versions of the ML emulators written in Python. These require using the aforementioned package, `forpy`.
+- forpy should be placed in `MiMA/src/shared/`.
+    - `forpy_mod.F90` is needed to use the package forpy for coupling python codes into forpy framework. More information about this package is available at [https://github.com/ylikx/forpy](https://github.com/ylikx/forpy).
+
 
 ## Training
 This directory contains scripts used to train all of the ML schemes described in the manuscript.
@@ -26,4 +29,3 @@ The sizes of the networks were determined by parameters:
 - We had precomputed many of the statistics needed to apply the rebalancing technique. These included how to divide by wind range coordinate into bins, and the histogram of the training dataset with respect to this wind range binning. 
 - The number of epochs is set at 1_000_000, not because we were expecting a million pass-throughs but to ensure that the early-stopping mechanism is what stopped the training progress. 
     - At times, we had to restart the training progress because we were alloted 48 hours maximum to run jobs, and the training had not satisfied the early stopping criteria after 48 hours. 
-
